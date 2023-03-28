@@ -46,7 +46,6 @@ def detect_faces_in_image(file_stream):
 
     face_locations = face_recognition.face_locations(image)
     face_encodings = face_recognition.face_encodings(image, face_locations)
-
     faces_found = []
 
     # Loop through each face found in the unknown image
@@ -57,9 +56,10 @@ def detect_faces_in_image(file_stream):
         name = "Unknown"
 
         face_distances = face_recognition.face_distance(known_face_encodings, face_encoding)
-        best_match_index = np.argmin(face_distances)
-        if matches[best_match_index]:
-            name = known_face_names[best_match_index]
+        if len(face_distances) > 0:
+            best_match_index = np.argmin(face_distances)
+            if matches[best_match_index]:
+                name = known_face_names[best_match_index]
         faces_found.append({"name": name, "location": [top, right, bottom, left]})
     return faces_found
 
