@@ -84,6 +84,7 @@ def add_face_route():
 
 @app.route('/detect_faces', methods=['GET', 'POST'])
 def detect_faces_route():
+    print(str(request.files))
     if 'image' not in request.files:
         return "Please add 'image' to files", 400
     try:
