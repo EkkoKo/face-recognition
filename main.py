@@ -68,14 +68,17 @@ def detect_faces_in_image(file_stream):
 def add_face_route():
     if 'image' not in request.files:
         return "Please add 'image' to files", 400
-    image = request.files['image']
+    try:
+        image = request.files['image']
+    except:
+        return "ERROR In Loading Image", 500
     if 'json' not in request.files:
         return "Please add 'json' with name to files", 400
     name = json.load(request.files['json'])['name']
     try:
         add_face_result = add_face(image, name)
     except:
-        return "ERROR", 500
+        return "ERROR In Adding Face", 500
     return add_face_result, 200
 
 
@@ -83,11 +86,14 @@ def add_face_route():
 def detect_faces_route():
     if 'image' not in request.files:
         return "Please add 'image' to files", 400
-    image = request.files['image']
+    try:
+        image = request.files['image']
+    except:
+        return "ERROR In Loading Image", 500
     try:
         result = detect_faces_in_image(image)
     except:
-        return "ERROR", 500
+        return "ERROR In Detecting Faces", 500
     return jsonify(result), 200
 
 @app.route('/health_check', methods=['GET', 'POST'])
