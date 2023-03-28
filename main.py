@@ -82,7 +82,7 @@ def add_face_route():
     return add_face_result, 200
 
 
-@app.route('/detect_faces', methods=['GET'])
+@app.route('/detect_faces', methods=['POST'])
 def detect_faces_route():
     if 'image' not in request.files:
         return "Please add 'image' to files", 400
