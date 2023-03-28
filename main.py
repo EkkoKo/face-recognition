@@ -72,7 +72,11 @@ def add_face_route():
     if 'json' not in request.files:
         return "Please add 'json' with name to files", 400
     name = json.load(request.files['json'])['name']
-    return add_face(image, name), 200
+    try:
+        add_face_result = add_face(image, name)
+    except:
+        return "ERROR", 500
+    return add_face_result, 200
 
 
 @app.route('/detect_faces', methods=['GET'])
@@ -80,8 +84,24 @@ def detect_faces_route():
     if 'image' not in request.files:
         return "Please add 'image' to files", 400
     image = request.files['image']
-    return jsonify(detect_faces_in_image(image)), 200
+    try:
+        result = detect_faces_in_image(image)
+    except:
+        return "ERROR", 500
+    return jsonify(result), 200
 
+@app.route('/health_check', methods=['GET', 'POST'])
+def health_check():
+    return "OK", 200
+
+@app.route('/flush_db', methods=['GET', 'POST'])
+def flush_db():
+    if not os.path.isfile(DB_NAME):
+        db = {"face_encodings": [], "names": []}
+    else:
+        with open(DB_NAME, 'w') as f:
+            json.dump(db, f)
+    return "DB Was Flushed!", 200
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
