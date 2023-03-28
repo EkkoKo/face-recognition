@@ -102,11 +102,9 @@ def health_check():
 
 @app.route('/flush_db', methods=['GET', 'POST'])
 def flush_db():
-    if not os.path.isfile(DB_NAME):
-        db = {"face_encodings": [], "names": []}
-    else:
-        with open(DB_NAME, 'w') as f:
-            json.dump(db, f)
+    db = {"face_encodings": [], "names": []}
+    with open(DB_NAME, 'w') as f:
+        json.dump(db, f)
     return "DB Was Flushed!", 200
 
 if __name__ == "__main__":
