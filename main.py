@@ -43,9 +43,6 @@ def detect_faces_in_image(file_stream):
     image = face_recognition.load_image_file(file_stream)
 
     known_face_encodings, known_face_names = get_db()
-    
-    if len(known_face_names) == 0:
-        return []
 
     face_locations = face_recognition.face_locations(image)
     face_encodings = face_recognition.face_encodings(image, face_locations)
