@@ -90,7 +90,7 @@ def detect_faces_route():
     if not data['image']:
         return "Please add 'image' to files", 400
     try:
-        image = bytes(data['image'], 'utf-8')
+        image = data['image'].encode()
     except:
         return "ERROR In Loading Image", 500
     try:
