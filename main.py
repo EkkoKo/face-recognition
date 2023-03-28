@@ -90,16 +90,12 @@ def detect_faces_route():
     if not data['image']:
         return "Please add 'image' to files", 400
     try:
-        output = io.StringIO()
-        output.write(data['image'])
-        # Retrieve the value written
-        image = output.getvalue()
-        # Discard buffer memory
-        output.close()
+        image = bytes(data['image'], 'utf-8')
     except:
         return "ERROR In Loading Image", 500
     try:
         result = detect_faces_in_image(image)
+
     except:
         return "ERROR In Detecting Faces", 500
     return jsonify(result), 200
