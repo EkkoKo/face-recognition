@@ -86,11 +86,10 @@ def add_face_route():
 @app.route('/detect_faces', methods=['GET', 'POST'])
 def detect_faces_route():
     app.logger.info(str(request.json))
-    data = request.json
-    if not data['image']:
+    if 'image' not in request.files:
         return "Please add 'image' to files", 400
     try:
-        image = data['image'].encode()
+        image = request.files['image']
     except:
         return "ERROR In Loading Image", 500
     try:
