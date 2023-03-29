@@ -1,6 +1,7 @@
 import face_recognition
 from flask import Flask, jsonify, request
 import numpy as np
+import json
 import os.path
 
 DB_NAME = "db.json"
