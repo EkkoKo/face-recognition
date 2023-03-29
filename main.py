@@ -1,8 +1,6 @@
 import face_recognition
 from flask import Flask, jsonify, request
-import io
 import numpy as np
-import json
 import os.path
 
 DB_NAME = "db.json"
@@ -85,7 +83,7 @@ def add_face_route():
 
 @app.route('/detect_faces', methods=['GET', 'POST'])
 def detect_faces_route():
-    app.logger.info(str(request.json))
+    app.logger.info(str(request.files))
     if 'image' not in request.files:
         return "Please add 'image' to files", 400
     try:
